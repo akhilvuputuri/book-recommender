@@ -8,7 +8,7 @@ import BookCard from "../components/bookCard";
 type Book = {
   title: string;
   author: string;
-  url: string;
+  image: string;
 }
 
 
@@ -18,24 +18,6 @@ export default function RecommendBook() {
   const [recommendedBooks, setRecommendedBooks] = useState<Book[]>([]);
 
 
-
-  async function updateData() {
-    const res = await fetch("http://127.0.0.1:5000/get_top_books", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-        "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
-        // Authorization: "Bearer YOUR_PRIVATE_KEY"
-      },
-    });
-    console.log("Done")
-
-    const books: Book[] = await res.json();
-    setRecommendedBooks(books)
-  }
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
 
     event.preventDefault()
@@ -77,13 +59,19 @@ export default function RecommendBook() {
         </form>
       </div>
       <div>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-          {recommendedBooks.map((book: Book) => (
-            <li key={book.title} className="p-4 bg-white shadow-md rounded-lg text-gray-700">
-              <BookCard title={book.title} author={book.author} />
+      {isLoading ? (
+        <div className="flex justify-center items-center h-40">
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-gray-500"></div>
+        </div>
+      ) : (
+        <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7 gap-16 p-4">
+          {recommendedBooks.map(({title, author, image}: Book) => (
+            <li key={title}>
+              <BookCard title={title} author={author} image={image} />
             </li>
           ))}
         </ul>
+      )}
       </div>
     </div>
   )

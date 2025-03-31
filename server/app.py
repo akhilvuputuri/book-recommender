@@ -28,7 +28,7 @@ CORS(app)
 
 @app.route('/get_top_books',methods=['get'])
 def get_top_books():
-    return jsonify(popularity_df.rename(columns={"Book-Title": "title", "Book-Author": "author", "Image-URL-M": "url"}).to_dict('records')), 200
+    return jsonify(popularity_df.rename(columns={"Book-Title": "title", "Book-Author": "author", "Image-URL-M": "image"}).to_dict('records')), 200
 
 @app.route('/get_all_book_names',methods=['get']) 
 def get_all_book_names():
