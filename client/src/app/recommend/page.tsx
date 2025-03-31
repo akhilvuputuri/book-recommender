@@ -51,10 +51,18 @@ export default function RecommendBook() {
   // }, [])
 
   return (
-    <div className="">
-      <div>
-        <form className="mb-4" onSubmit={handleSubmit}>
-          <Input type="text" name="searchTitle" value={searchTitle} required placeholder="Search title" onChange={e => setSearchTitle(e.target.value)} />
+    <div>
+      <div className="mt-8">
+        <form className="mb-4 flex justify-center space-x-4" onSubmit={handleSubmit}>
+          <Input
+            type="text"
+            name="searchTitle"
+            value={searchTitle}
+            required
+            placeholder="Search title"
+            onChange={(e) => setSearchTitle(e.target.value)}
+            className="w-1/3"
+          />
           <Button type="submit">Search</Button>
         </form>
       </div>

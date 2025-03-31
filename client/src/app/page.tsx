@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card"
 import {
   Carousel,
   CarouselContent,
@@ -8,6 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay"
 
 type Book = {
   title: string;
@@ -57,28 +59,39 @@ export default function Home() {
           <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-gray-500"></div>
         </div>
       ) : (
-        <Carousel className="relative">
-          <CarouselPrevious className="absolute left-0 top-1/2 transform -translate-y-1/2">
-            Previous
-          </CarouselPrevious>
-          <CarouselContent className="flex overflow-x-auto snap-x snap-mandatory">
-            {bookImages.map((image, index) => (
-              <CarouselItem
-                key={index}
-                className="flex-shrink-0 w-1/3 h-40 bg-gray-800 text-gray-100 flex items-center justify-center rounded-lg snap-center mx-2"
-              >
-                <img
-                  src={image}
-                  alt={`Book ${index + 1}`}
-                  className="w-full aspect-[2/3] object-cover rounded-t-lg"
-                />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselNext className="absolute right-0 top-1/2 transform -translate-y-1/2">
-            Next
-          </CarouselNext>
-        </Carousel>
+    <div className="flex justify-center items-center h-screen">
+      <Carousel 
+      plugins={[
+        Autoplay({
+          delay: 5000,
+        }),
+      ]}
+      className="w-full max-w-2xl"
+      >
+        <CarouselContent className="-ml-1">
+          {bookImages.map((image, index) => (
+            <CarouselItem
+              key={index}
+              className="pl-1 md:basis-1/2 lg:basis-1/3"
+            >
+              <div className="p-1">
+                <Card className="bg-gray-700 border-none">
+                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                  <img
+                    src={image}
+                    // alt={`Cover of ${imeg}`}
+                    className="w-full aspect-[2/3] object-cover rounded-t-lg"
+                  />
+                  </CardContent>
+                </Card>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </div>
       )}
     </div>
   );

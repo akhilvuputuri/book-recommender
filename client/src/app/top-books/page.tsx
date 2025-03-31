@@ -38,7 +38,7 @@ export default function TopBooks() {
             "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
           },
         });
-        const data: Book[] = await res.json();
+        const data: Book[] = (await res.json()).sort(() => 0.5 - Math.random());;
         setBooks(data);
       } catch (error) {
         console.error("Failed to fetch books:", error);
