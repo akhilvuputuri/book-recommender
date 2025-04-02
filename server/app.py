@@ -2,12 +2,13 @@ from flask import Flask,request,jsonify
 from flask_cors import CORS
 import pickle
 import numpy as np
+import pandas as pd
 
-popularity_df = pickle.load(open('popularity.pkl','rb'))
-pt = pickle.load(open('pt.pkl','rb'))
-books = pickle.load(open('books.pkl','rb'))
-similarity_scores = pickle.load(open('similarity_scores.pkl','rb'))
-filtered_books = pickle.load(open('filtered_books.pkl','rb'))
+popularity_df = pd.read_pickle(open('popularity.pkl','rb'))
+pt = pd.read_pickle(open('pt.pkl','rb'))
+books = pd.read_pickle(open('books.pkl','rb'))
+similarity_scores = pd.read_pickle(open('similarity_scores.pkl','rb'))
+filtered_books = pd.read_pickle(open('filtered_books.pkl','rb'))
 
 app = Flask(__name__)
 CORS(app)
