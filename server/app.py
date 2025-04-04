@@ -1,6 +1,5 @@
 from flask import Flask,request,jsonify
 from flask_cors import CORS
-import pickle
 import numpy as np
 import pandas as pd
 
@@ -13,19 +12,6 @@ filtered_books = pd.read_pickle(open('filtered_books.pkl','rb'))
 app = Flask(__name__)
 CORS(app)
 
-# @app.route('/')
-# def index():
-#     return render_template('index.html',
-#                            book_name = list(popularity_df['Book-Title'].values),
-#                            author=list(popularity_df['Book-Author'].values),
-#                            image=list(popularity_df['Image-URL-M'].values),
-#                            votes=list(popularity_df['num_ratings'].values),
-#                            rating=list(popularity_df['avg_rating'].values)
-#                            )
-
-# @app.route('/recommend')
-# def recommend_ui():
-#     return render_template('recommend.html')
 
 @app.route('/get_top_books',methods=['get'])
 def get_top_books():
@@ -37,8 +23,6 @@ def get_all_book_names():
 
 @app.route('/get_recommend',methods=['post'])
 def recommend():
-    print("REQUEST")
-    print(request.json)
     user_input = request.json['searchTitle']
     index = np.where(pt.index == user_input)[0][0]
     similar_items = sorted(list(enumerate(similarity_scores[index])), key=lambda x: x[1], reverse=True)[1:6]
@@ -57,26 +41,6 @@ def recommend():
     # print(data)
 
     return jsonify(data), 200
-
-# @app.route('/recommend_books',methods=['post'])
-# def recommend():
-    user_input = request.form.get('user_input')
-    index = np.where(pt.index == user_input)[0][0]
-    similar_items = sorted(list(enumerate(similarity_scores[index])), key=lambda x: x[1], reverse=True)[1:5]
-
-    data = []
-    for i in similar_items:
-        item = []
-        temp_df = books[books['Book-Title'] == pt.index[i[0]]]
-        item.extend(list(temp_df.drop_duplicates('Book-Title')['Book-Title'].values))
-        item.extend(list(temp_df.drop_duplicates('Book-Title')['Book-Author'].values))
-        item.extend(list(temp_df.drop_duplicates('Book-Title')['Image-URL-M'].values))
-
-        data.append(item)
-
-    print(data)
-
-    return render_template('recommend.html',data=data)
 
 if __name__ == '__main__':
     app.run(debug=True)
