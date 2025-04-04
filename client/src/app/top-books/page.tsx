@@ -11,6 +11,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { getTopBooks } from "@/utils/api/books";
 
 type Book = {
   title: string;
@@ -28,18 +29,9 @@ export default function TopBooks() {
     const fetchBooks = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch("http://127.0.0.1:5000/get_top_books", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Credentials": "true",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-            "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
-          },
-        });
-        const data: Book[] = (await res.json()).sort(() => 0.5 - Math.random());;
-        setBooks(data);
+        const data = await getTopBooks();
+        const shuffledBooks = data.sort(() => 0.5 - Math.random());
+        setBooks(shuffledBooks);
       } catch (error) {
         console.error("Failed to fetch books:", error);
       } finally {
