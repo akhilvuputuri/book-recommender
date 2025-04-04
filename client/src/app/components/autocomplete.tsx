@@ -10,7 +10,11 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { Input } from "@/components/ui/input";
-import { Popover, PopoverAnchor, PopoverContent } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverAnchor,
+  PopoverContent,
+} from "@/components/ui/popover";
 import { Skeleton } from "@/components/ui/skeleton";
 
 type Props<T extends string> = {
@@ -70,10 +74,10 @@ export function Autocomplete<T extends string>({
   };
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center w-1/4">
       <Popover open={open} onOpenChange={setOpen}>
-        <Command shouldFilter={false}>
-          <PopoverAnchor asChild>
+        <Command className="w-full" shouldFilter={false}>
+          <PopoverAnchor asChild className="w-full">
             <CommandPrimitive.Input
               asChild
               value={searchValue}
@@ -83,7 +87,10 @@ export function Autocomplete<T extends string>({
               onFocus={() => setOpen(true)}
               onBlur={onInputBlur}
             >
-              <Input placeholder={placeholder} />
+              <Input
+                placeholder={placeholder}
+                className="w-full h-14 font-semibold px-4"
+              />
             </CommandPrimitive.Input>
           </PopoverAnchor>
           {!open && <CommandList aria-hidden="true" className="hidden" />}
@@ -98,9 +105,11 @@ export function Autocomplete<T extends string>({
                 e.preventDefault();
               }
             }}
-            className="w-[--radix-popover-trigger-width] p-0"
+            className="w-[--radix-popover-trigger-width] p-0 bg-zinc-700 border-none" // Added background color and removed border
           >
-            <CommandList>
+            <CommandList className="bg-zinc-700">
+              {" "}
+              {/* Added matching background to CommandList */}
               {isLoading && (
                 <CommandPrimitive.Loading>
                   <div className="p-1">
@@ -109,13 +118,16 @@ export function Autocomplete<T extends string>({
                 </CommandPrimitive.Loading>
               )}
               {items.length > 0 && !isLoading ? (
-                <CommandGroup>
+                <CommandGroup className="bg-zinc-700">
+                  {" "}
+                  {/* Added matching background to CommandGroup */}
                   {items.map((option) => (
                     <CommandItem
                       key={option.value}
                       value={option.value}
                       onMouseDown={(e) => e.preventDefault()}
                       onSelect={onSelectItem}
+                      className="text-zinc-300" // Added text color for better contrast
                     >
                       <Check
                         className={cn(
@@ -131,7 +143,9 @@ export function Autocomplete<T extends string>({
                 </CommandGroup>
               ) : null}
               {!isLoading ? (
-                <CommandEmpty>{emptyMessage ?? "No items."}</CommandEmpty>
+                <CommandEmpty className="text-zinc-300">
+                  {emptyMessage ?? "No items."}
+                </CommandEmpty>
               ) : null}
             </CommandList>
           </PopoverContent>
