@@ -3,14 +3,21 @@ from flask_cors import CORS
 import numpy as np
 import pandas as pd
 
-popularity_df = pd.read_pickle(open('popularity.pkl','rb'))
-pt = pd.read_pickle(open('pt.pkl','rb'))
-books = pd.read_pickle(open('books.pkl','rb'))
-similarity_scores = pd.read_pickle(open('similarity_scores.pkl','rb'))
-filtered_books = pd.read_pickle(open('filtered_books.pkl','rb'))
+# Local imports (pickle files)
+def load_pickle_files():
+    popularity_df = pd.read_pickle(open('results/popularity.pkl', 'rb'))
+    pt = pd.read_pickle(open('results/pt.pkl', 'rb'))
+    books = pd.read_pickle(open('results/books.pkl', 'rb'))
+    similarity_scores = pd.read_pickle(open('results/similarity_scores.pkl', 'rb'))
+    filtered_books = pd.read_pickle(open('results/filtered_books.pkl', 'rb'))
+    return popularity_df, pt, books, similarity_scores, filtered_books
 
+# Initialize Flask app
 app = Flask(__name__)
 CORS(app)
+
+# Load model data
+popularity_df, pt, books, similarity_scores, filtered_books = load_pickle_files()
 
 
 @app.route('/get_top_books',methods=['get'])
@@ -35,11 +42,7 @@ def recommend():
             'author': temp_df.drop_duplicates('Book-Title')['Book-Author'].values[0],
             'image': temp_df.drop_duplicates('Book-Title')['Image-URL-M'].values[0]
         }
-
         data.append(item)
-
-    # print(data)
-
     return jsonify(data), 200
 
 if __name__ == '__main__':
