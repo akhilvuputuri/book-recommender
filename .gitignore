@@ -1,0 +1,19 @@
+# Node.js (Frontend)
+client/node_modules/
+client/.next/
+client/.env.local
+client/.env
+client/.DS_Store
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+
+# Python (Backend)
+server/__pycache__/
+server/*.pyc
+server/*.pyo
+server/.env
+server/.DS_Store
+server/venv/
+server/.pytest_cache/
+server/instance/

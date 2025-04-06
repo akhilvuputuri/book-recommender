@@ -5,8 +5,7 @@ A full-stack application that recommends books based on user preferences, built 
 ## Features
 
 - Browse top 50 recommended books
-- Search for specific books
-- Get personalized book recommendations
+- Get personalized book recommendations using similarity index
 - Redis caching for improved performance
 - Responsive UI built with shadcn/ui components
 
@@ -108,14 +107,6 @@ REDIS_PORT=6379
 FLASK_APP=app.py
 FLASK_ENV=development
 ```
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## License
 
