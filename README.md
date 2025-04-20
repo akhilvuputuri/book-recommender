@@ -2,6 +2,10 @@
 
 A full-stack application that recommends books based on user preferences, built with Next.js and Flask.
 
+## Demo
+
+Check out the demo on YouTube: [https://youtu.be/tndAY-bzERY](https://youtu.be/tndAY-bzERY)
+
 ## Features
 
 - Browse top 50 recommended books
